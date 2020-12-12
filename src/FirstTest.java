@@ -56,7 +56,7 @@ public class FirstTest {
                 "Cannot find list item",
                 5);
 
-        waitForElementAndSendClear(By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+        waitForElementAndClear(By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find search input",
                 5);
 
@@ -94,7 +94,7 @@ public class FirstTest {
         return element;
     }
 
-    private WebElement waitForElementAndSendClear(By by, String error_message, long timeOutInSeconds){
+    private WebElement waitForElementAndClear(By by, String error_message, long timeOutInSeconds){
         WebElement element = waitForElementPresentBy(by, error_message, timeOutInSeconds);
         element.clear();
         return element;
