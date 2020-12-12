@@ -67,8 +67,19 @@ public class FirstTest {
 
     @Test
     public void searchByWordTest(){
-    }
 
+        waitForElementAndSendKeys(By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Java",
+                "Cannot send keys to search input",
+                5);
+
+        for(int i = 0; i < 3; i++) {
+            waitElementWithTextBy(By.id("org.wikipedia:id/page_list_item_title"),
+                    "Java",
+                    "Cannot find text 'Java'",
+                    5);
+        }
+    }
 
     private WebElement waitForElementPresentBy(By by, String error_message, long timeOutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
@@ -105,4 +116,9 @@ public class FirstTest {
         Assert.assertEquals(error_message, value, element.getAttribute("text"));
     }
 
+    private boolean waitElementWithTextBy(By by, String value, String error_message, long timeOutInSeconds){
+        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.textToBePresentInElementLocated(by, value));
+    }
 }
