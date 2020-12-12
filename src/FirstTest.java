@@ -44,10 +44,60 @@ public class FirstTest {
                 "Input does not have text 'Search Wikipedia'");
     }
 
+    @Test
+    public void cancelSearchTextTest(){
+
+        waitForElementAndSendKeys(By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Java",
+                "Cannot send keys to search input",
+                5);
+
+        waitForElementPresentBy(By.id("org.wikipedia:id/page_list_item_title"),
+                "Cannot find list item",
+                5);
+
+        waitForElementAndSendClear(By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5);
+
+        waitInvisibilityOfElementBy(By.id("org.wikipedia:id/page_list_item_title"),
+                "Element find",
+                5);
+    }
+
+    @Test
+    public void searchByWordTest(){
+    }
+
+
     private WebElement waitForElementPresentBy(By by, String error_message, long timeOutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
         wait.withMessage(error_message + "\n");
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    private boolean waitInvisibilityOfElementBy(By by, String error_message, long timeOutInSeconds){
+        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+    }
+
+    private WebElement waitForElementAndClick(By by, String error_message, long timeOutInSeconds){
+        WebElement element = waitForElementPresentBy(by, error_message, timeOutInSeconds);
+        element.click();
+        return element;
+    }
+
+    private WebElement waitForElementAndSendKeys(By by,  String value, String error_message, long timeOutInSeconds){
+        WebElement element = waitForElementPresentBy(by, error_message, timeOutInSeconds);
+        element.sendKeys(value);
+        return element;
+    }
+
+    private WebElement waitForElementAndSendClear(By by, String error_message, long timeOutInSeconds){
+        WebElement element = waitForElementPresentBy(by, error_message, timeOutInSeconds);
+        element.clear();
+        return element;
     }
 
     private void assertElementHasText(By by, String value, String error_message){
