@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 
+import static org.junit.Assert.assertEquals;
+
 public class FirstTest {
 
     private AppiumDriver driver;
@@ -193,10 +195,11 @@ public class FirstTest {
         WebElement pageJavaScript = waitForElementPresentBy(
                 By.id("org.wikipedia:id/view_page_title_text"),
                 "Cannot find page title JavaScript",
-                5);
+                10);
 
-        Assert.assertTrue("Article title is't JavaScript",
-                "JavaScript" == pageJavaScript.getText());
+        assertEquals("Article title is't JavaScript ",
+                pageJavaScript.getText(),
+                "JavaScript");
 
     }
 
@@ -301,6 +304,4 @@ public class FirstTest {
                 .release()
                 .perform();
     }
-
-
 }
