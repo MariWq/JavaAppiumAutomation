@@ -203,6 +203,28 @@ public class FirstTest {
 
     }
 
+    @Test
+    public void checkPageTitle(){
+
+        waitForElementAndClick(By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot send keys to 'Search Wikipedia' input",
+                5);
+
+        waitForElementAndSendKeys(By.xpath("//*[contains(@text,'Search…')]"),
+                "Java",
+                "Cannot send keys to search input",
+                5);
+
+        waitForElementAndClick(By.xpath("//*[@text='Object-oriented programming language']"),
+                "Cannot find title of article 'Object-oriented programming language'",
+                5);
+
+        assertElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find title page");
+    }
+
+
     private Boolean waitForElementNotPresent(By by, String error_message, long timeOutInSeconds){
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -303,5 +325,11 @@ public class FirstTest {
                 .moveTo(left_x, middle_y)
                 .release()
                 .perform();
+    }
+
+    private WebElement assertElementPresent(By by, String error_message) {
+        WebDriverWait wait = new WebDriverWait(driver, 0);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 }
