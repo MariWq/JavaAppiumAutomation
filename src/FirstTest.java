@@ -13,8 +13,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FirstTest {
 
@@ -221,7 +223,7 @@ public class FirstTest {
 
         assertElementPresent(
                 By.id("org.wikipedia:id/view_page_title_text"),
-                "Cannot find title page");
+                "Cannot find title page ");
     }
 
 
@@ -327,9 +329,16 @@ public class FirstTest {
                 .perform();
     }
 
-    private WebElement assertElementPresent(By by, String error_message) {
-        WebDriverWait wait = new WebDriverWait(driver, 0);
-        wait.withMessage(error_message + "\n");
-        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    private int getAmoumtOfElement(By by){
+        List elements = driver.findElements(by);
+        return elements.size();
+    }
+
+    private void assertElementPresent(By by, String error_message) {
+        int amout_of_elements = getAmoumtOfElement(by);
+        if (amout_of_elements == 0){
+            String default_message = "An element " + by.toString() + " supposed to be present";
+            throw new AssertionError(default_message + " " + error_message);
+        }
     }
 }
