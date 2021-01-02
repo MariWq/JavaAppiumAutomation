@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,6 +36,7 @@ public class FirstTest {
         capabilities.setCapability("app","D:\\QA Courses\\AppiumMobile\\JavaAppiumAutomation\\apks\\org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
+        driver.rotate(ScreenOrientation.PORTRAIT);
     }
 
     @After
@@ -202,7 +204,6 @@ public class FirstTest {
         assertEquals("Article title is't JavaScript ",
                 pageJavaScript.getText(),
                 "JavaScript");
-
     }
 
     @Test
