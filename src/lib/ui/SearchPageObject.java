@@ -10,7 +10,8 @@ public class SearchPageObject extends MainPageObject{
         SEARCH_INPUT = "//*[contains(@text,'Search…')]",
         SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
         SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@text='{SUBSTRING}']",
-        SEARCH_LIST = "org.wikipedia:id/page_list_item_title"; //Object-oriented programming language
+        SEARCH_LIST = "org.wikipedia:id/page_list_item_title",
+        SEARCH_ARTICLE_NAME = "//*[@text='{ARTICLENAME}']";
 
     public SearchPageObject(AppiumDriver driver){
         super(driver);
@@ -19,6 +20,10 @@ public class SearchPageObject extends MainPageObject{
     /*TEMPLATES METHODS*/
     private static String getResultSearchElement(String substring){
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
+    }
+
+    private static String getTitleName(String article_name){
+        return SEARCH_ARTICLE_NAME.replace("{ARTICLENAME}", article_name);
     }
     /*TEMPLATES METHODS*/
 
@@ -29,6 +34,13 @@ public class SearchPageObject extends MainPageObject{
 
     public void waitForCancelButtonToAppear(){
         this.waitForElementPresentBy(By.id(SEARCH_CANCEL_BUTTON), "Cannot find search cancel button", 5);
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String description){
+        this.waitForElementPresentBy(By.xpath(getTitleName(title)),
+                "Cannot find title article " + title, 5);
+        this.waitForElementPresentBy(By.xpath(getTitleName(description)),
+                "Cannot find title description " + description, 5);
     }
 
     public void waitElementList(){
